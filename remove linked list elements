@@ -1,0 +1,66 @@
+Given the head of a linked list and an integer val, remove all the nodes of the linked list that has Node.val == val, and return the new head.
+Example 1:
+Input: head = [1,2,6,3,4,5,6], val = 6
+Output: [1,2,3,4,5]
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeElements(ListNode* head, int val) {
+        ListNode* temp=head;
+        ListNode* x=temp;
+        if(head == NULL)
+            return NULL;
+        while(x->val == val)
+        {
+            if(x->next!=NULL)
+                x=x->next;
+            else
+                return NULL;
+            head=head->next;
+        }
+        if(head->next == NULL && head->val == val)
+            return NULL;
+        else if(head->next == NULL)
+            return head;
+        temp=x->next;
+        while(temp->next!=NULL)
+        {
+            if(temp->val == val)
+            {
+                x->next=temp->next;
+                if(x->next!=NULL)
+                {
+                    temp=x->next;
+                }
+                else
+                {
+                    return head;
+                }
+            }
+            else
+            {
+                x=x->next;
+                temp=x->next;
+            }
+        }
+        if(temp->val == val)
+        {
+            x->next=NULL;
+        }
+        return head;
+        
+            
+    }
+};
+
+
