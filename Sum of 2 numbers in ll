@@ -1,0 +1,55 @@
+class Solution {
+public:
+	/// i have solved this problem using our traditional method of adding two numbers
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        int carry = 0;   /// initially we need to add first two numbers so initializing carry with zero  /// curr2pointer to track the second list of numbers
+        ListNode* head = NULL;  /// head of our output list
+        ListNode* temp = NULL; /// temp will track the tail of our list and it will add all next solved added numbers 
+        
+        while (l1 || l2) {   /// our loop will run till we traverse both the input lists
+            int sum = carry;      /// first will always sum up with our carry 
+            if (l1) {  /// 
+                sum += l1 -> val; /// then will add first number 
+            }
+            
+            if (l2) {
+                sum += l2 -> val; /// then will add second number
+            }
+            
+			 /// our sum will always range upto (0 - 18) since only two numbers will get added
+            if (sum >= 10) { 
+			/// if our sum is > zero then we'll carry one and make the node of unit number
+                sum = sum % 10;  
+                carry = 1; 
+            } else {
+                carry = 0; /// else carry will zero
+            }
+                
+            ListNode* newNode = new ListNode(sum);
+            if (head == NULL) {
+                head = newNode;
+                temp = newNode;
+            } else {
+                temp -> next = newNode;
+                temp = temp -> next;
+            }
+            
+            if (l1) {
+                l1 = l1 -> next;
+            }
+            if (l2) {
+                l2 = l2 -> next;
+            }
+        }
+        
+		/// there could be a chance that we'll left up with one carry in the end eg : (199 + 1) 
+        if (carry == 1) {                
+            ListNode* newNode = new ListNode(carry);
+            temp -> next = newNode; 
+            temp = temp -> next;
+        }
+        
+        return head;
+        
+    }
+};
